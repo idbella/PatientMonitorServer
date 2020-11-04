@@ -1,0 +1,25 @@
+{
+  "name": "patientmonitorserver",
+  "version": "1.0.0",
+  "description": "patient monitoring server ",
+  "main": "main.js",
+  "scripts": {
+    "test": "node src/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idbella/PatientMonitorServer.git"
+  },
+  "keywords": [
+    "patient"
+  ],
+  "author": "said id-bella",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/idbella/PatientMonitorServer/issues"
+  },
+  "homepage": "https://github.com/idbella/PatientMonitorServer#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
