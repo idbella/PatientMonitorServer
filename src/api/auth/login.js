@@ -1,22 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.js                                            :+:      :+:    :+:   */
+/*   login.js                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/04 18:30:52 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/05 10:21:02 by sid-bell         ###   ########.fr       */
+/*   Created: 2020/11/05 09:51:39 by sid-bell          #+#    #+#             */
+/*   Updated: 2020/11/05 09:56:19 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-const AuthRoute = require('./api/auth/routes')
-const loginhandler = require('./api/auth/login')
-const registerhandler = require('./api/auth/register')
-const app = require('./initServer');
-
-new AuthRoute(app, loginhandler, registerhandler);
-
-app.get("/", (request, response) => {
-    response.send("server is working");
-})
+module.exports = (email, password) => {
+    console.log(`login ${email} with pass:${password}`);
+}
