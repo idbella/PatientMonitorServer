@@ -6,28 +6,38 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:52:03 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/05 10:42:24 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/06 11:25:52 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 module.exports = class AuthRoutes
 {
     constructor (app, login, register) {
-        app.post('/api/login', (req, res) => {
+        app.post('/api/login', (req, response) => {
             const {email, password} = req.body
             if (email && password)
             {
-                login(email, password);
-                 res.send('done');
+                login(app, req.body, (err, res) => {
+                    if (err)
+                        return response.sendStatus(500);
+                        if (res.length === 1)
+                            response.sendStatus(200)
+                        else
+                            response.sendStatus(404);
+                });
             }
             else
-                res.send("missing info");
-           
+                response.sendStatus(400);
         })
-        app.post('/api/register', (req, res) => {
-            const {email, password, first_name, last_name, phone, cin, role, birthday} = req.body
-            register(email, password, first_name, last_name, birthday, cin, role)
-            console.log(`register request = ${req.body}`);
+        app.post('/api/register', (req, response) => {
+            register(app, req.body, (err, res) => {
+                if (err)
+                {
+                    response.sendStatus(500);
+                    return console.log(err);
+                }
+                console.log(res);
+            })    
         })
     }
 }
