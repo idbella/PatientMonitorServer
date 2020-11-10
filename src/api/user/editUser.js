@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 11:48:56 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/08 16:41:05 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/10 20:10:21 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,18 @@ module.exports = (app, data, session, callback) => {
         newData.birthday = birthday
     if (cin && cin.length > 0)
         newData.cin = cin
-    bcrypt.hash(password, process.env.HASH_SALT, (err, hashedPassword) => {
-        if (err)
-            callback(err);
-        if (password && password.length > 0)
+    const query = `update user set ? where id=${session.userId};`
+    if (password && password.length > 0)
+    {
+        bcrypt.hash(password, process.env.HASH_SALT, (err, hashedPassword) => {
+            if (err)
+                return callback(err);
             newData.password = hashedPassword
-        const query = `update user set ? where id=${session.userId};`
+            app.connection.query(query, newData, callback)
+        })
+    }
+    else if (Object.keys(newData).length > 0) 
         app.connection.query(query, newData, callback)
-    })
+    else
+        callback()
 }

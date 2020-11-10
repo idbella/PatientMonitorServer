@@ -6,12 +6,14 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 15:59:21 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/09 18:35:08 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/10 22:57:18 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 const editUser      = require('./editUser')
 const viewUser      = require('./viewUser')
+const setPatientAsMinor = require('./minor')
+const roles             = require('../const/roles')
 
 module.exports = class UserRoutes
 {
@@ -21,7 +23,7 @@ module.exports = class UserRoutes
 
         app.post('/api/users/:id', verifylogin,
             (request, response) => {
-                editUser(app, request.params.id, request.body, request.session,
+                editUser(app, request.body, request.session,
                     (err, result) => {
                         if (err)
                         {
@@ -44,5 +46,19 @@ module.exports = class UserRoutes
                 response.send(res);
             })
         })
+
+
+        app.post('/api/users/:id/minor', verifylogin, (req, res)=>{
+            if (roles.receptionist.id !== req.session.role)
+                res.sendStatus(401)
+            setPatientAsMinor(app, req.params.id, req.body, (err, result)=>{
+                if (err){
+                    console.log(err)
+                    return res.sendStatus(500)
+                }
+                res.sendStatus(200)
+            })
+        })
+
     }
 }

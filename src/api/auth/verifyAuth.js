@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   verifyAuth.js                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/10 22:59:47 by sid-bell          #+#    #+#             */
+/*   Updated: 2020/11/10 23:00:54 by sid-bell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+const roles = require('../const/roles')
 
 function verifylogin(request, response, next) {
 
@@ -22,7 +35,7 @@ function verifylogout(request, response, next) {
 
 function verifyAdmin(request, response, next){
 	const {role}	= request.session;
-	if ((role & 0o70000) === 0)
+	if ((role !== roles.admin.id))
 	{
 		console.log(`user ${request.session.userId} is not an admin ${role}`);
 		return response.sendStatus(401);

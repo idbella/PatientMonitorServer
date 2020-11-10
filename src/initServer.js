@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:29:02 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/06 14:04:48 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/10 20:39:05 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ app.listen(process.env.PORT, (err) => {
 
 app.use(parser.urlencoded({ extended: false }))
 
-app.connection = connection;
+app.use((req,res,next)=>{
+    console.log("new  connection")
+    next()
+})
+app.connection = connection
 
 app.verifyAuth = verifyAuth
-module.exports = app;
+
+module.exports = app

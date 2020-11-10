@@ -1,0 +1,15 @@
+rm -rf cookie
+cookie="-b cookie -c cookie"
+email=receptionist
+pass=admin
+
+echo "testing exist user"
+exist=$(curl $cookie -d password=$pass -d email=$email localhost:8080/api/login 2>&-)
+echo "
+  login with u:$email,p:$pass = $exist
+"
+
+email=$(cat /dev/urandom | head -c 5|base64)
+
+result=$(curl $cookie -d cin 2434 -d email=$email -d "password=admin" -d "first_name=admin" -d "last_name=admin" -d "birthday=16-02-2" localhost:8080/api/patient/ 2>&-)
+echo $result

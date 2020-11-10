@@ -1,0 +1,45 @@
+rm -rf cookie
+cookie="-b cookie -c cookie"
+email=modir
+pass=nonexist
+
+echo "testing non exist user"
+nonexist=$(curl $cookie -d password=$pass -d email=$email localhost:8080/api/login 2>&-)
+echo "      login" with u:$email,p:$pass = $nonexist
+pass=admin
+
+echo "testing exist user"
+exist=$(curl $cookie -d password=$pass -d email=$email localhost:8080/api/login 2>&-)
+echo "
+  login with u:$email,p:$pass = $exist
+"
+echo "testing 2nd login"
+forbidden=$(curl $cookie -d password=$pass -d email=$email localhost:8080/api/login 2>&-)
+echo "  login with u:$email,p:$pass = $forbidden
+"
+
+email=$(cat /dev/urandom | head -c 5|base64)
+
+echo "
+testing register email $email"
+result=$(curl $cookie -d email=$email -d "password=admin" -d "first_name=admin" -d "last_name=admin" -d "birthday=16-02-2" -d "role=1" localhost:8080/api/register 2>&-)
+echo "  register as admin $result"
+
+echo "
+test listing users"
+result=$(curl $cookie localhost:8080/api/admin/users/ 2>&-)
+echo "
+    $result"
+
+name=$(cat /dev/urandom | head -c 6|base64)
+
+echo test edit user id : 4 to $name
+result=$(curl $cookie -d first_name=$name localhost:8080/api/admin/users/4 2>&-)
+echo "
+    edit result : $result"
+result=$(curl $cookie localhost:8080/api/admin/users/4 2>&-)
+echo "
+    listing : $result"
+
+result=$(curl $cookie -d email=blblb -d "password=admin" -d "first_name=admin" -d "last_name=admin" -d "birthday=16-02-2" localhost:8080/api/patient/ 2>&-)
+echo $result

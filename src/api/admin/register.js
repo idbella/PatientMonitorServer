@@ -6,11 +6,12 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:52:57 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/09 18:27:57 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/10 22:56:36 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-const bcrypt = require('bcrypt');
+const bcrypt    = require('bcrypt');
+const roles     = require('../const/roles')
 
 function register(app, data, callback) {
 
@@ -31,10 +32,23 @@ function register(app, data, callback) {
                         return (callback(err))
                     if (res.length > 0)
                         return (callback("email already exist."));
-                    connection.query(query, newData, callback);
+                    connection.query(query, newData, (err, res)=>{
+                        if (err)
+                            return (callback(err))
+                        if (res.insertId && newData.fk_role === roles.doctor.id)
+                            registerDoctor(app, res.insertId, callback)
+                        else
+                            callback(err, res);
+                    });
             })
         }
     );
+}
+
+function registerDoctor(app, userId, callback)
+{
+    const query = "insert into doctor set fk_user=? ;"
+    app.connection.query(query, [userId], callback)
 }
 
 module.exports = register;

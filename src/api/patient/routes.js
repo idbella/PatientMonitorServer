@@ -6,26 +6,27 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:45:34 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/10 12:22:31 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/10 23:01:47 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 const addPatient    = require('./add')
+const roles         = require('../const/roles')
 
 module.exports = class PatientRoute
 {
     constructor (app) {
 
 		const verifyLogin = app.verifyAuth.verifylogin;
-
         app.post('/api/patient', verifyLogin,
             (request, response) => {
-                if (request.session.role !== 0)
+                if (request.session.role !== roles.receptionist.id)
                     return (response.sendStatus(401));
                 addPatient(app, request.body,
-                    (err, result) => {
+                    (err) => {
                         if (err)
                         {
+                            console.log(err);
                             response.sendStatus(err.code ? err.code : 500);
                             return console.log(err);
                         }
