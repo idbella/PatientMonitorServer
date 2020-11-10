@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 11:11:11 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/08 15:00:36 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/10 10:30:40 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ module.exports = (app, id, data, session, callback) => {
     if (phone && phone.length > 0)
         new_data.phone = phone;
     if (role && session.userId != parseInt(id))
-        new_data.role = role;
-    const query = `update user set ? where id=${id}`
+        new_data.fk_role = role;
+    const query = `update user set ? where id=${id};`
     
 	app.connection.query(query, new_data, callback);;
 }

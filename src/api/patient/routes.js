@@ -5,27 +5,28 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/08 15:59:21 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/09 18:35:08 by sid-bell         ###   ########.fr       */
+/*   Created: 2020/11/08 16:45:34 by sid-bell          #+#    #+#             */
+/*   Updated: 2020/11/10 12:22:31 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-const editUser      = require('./editUser')
-const viewUser      = require('./viewUser')
+const addPatient    = require('./add')
 
-module.exports = class UserRoutes
+module.exports = class PatientRoute
 {
     constructor (app) {
 
-		const verifylogin = app.verifyAuth.verifylogin;
+		const verifyLogin = app.verifyAuth.verifylogin;
 
-        app.post('/api/users/:id', verifylogin,
+        app.post('/api/patient', verifyLogin,
             (request, response) => {
-                editUser(app, request.params.id, request.body, request.session,
+                if (request.session.role !== 0)
+                    return (response.sendStatus(401));
+                addPatient(app, request.body,
                     (err, result) => {
                         if (err)
                         {
-                            response.sendStatus(500);
+                            response.sendStatus(err.code ? err.code : 500);
                             return console.log(err);
                         }
                         response.sendStatus(200);
@@ -33,16 +34,14 @@ module.exports = class UserRoutes
                 )
             }
         )
-
-        app.get('/api/users/:id', verifylogin, (request, response) =>{
-            viewUser(app, request.session, request.params.id, (err, res) => {
-                if (err)
-                {
-                    console.log(err)
-                    return response.sendStatus(err.code ? err.code : 500);
-                }
-                response.send(res);
-            })
-        })
     }
 }
+
+
+/*
+    admin       100 => 4000
+    doctor      111 => 0700
+    nurse       011 => 0030
+    patient     001 => 0001
+    reception   000 => 0000
+*/

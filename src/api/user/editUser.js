@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 11:48:56 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/08 15:08:26 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/08 16:41:05 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ module.exports = (app, data, session, callback) => {
             callback(err);
         if (password && password.length > 0)
             newData.password = hashedPassword
-        const query = `update user set ? where id=${session.userId}`
+        const query = `update user set ? where id=${session.userId};`
         app.connection.query(query, newData, callback)
     })
 }
