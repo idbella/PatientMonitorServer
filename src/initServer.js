@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:29:02 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/10 20:39:05 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/13 10:48:19 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ const mysql         = require('mysql')
 const env           = require('dotenv').config();
 const session       = require('express-session');
 const verifyAuth    = require('./api/auth/verifyAuth');
+const fileUpload    = require('express-fileupload')
 
 const connection = mysql.createConnection({
     host     : process.env.DB_HOST,
     user     : process.env.DB_USER,
     password : process.env.DB_PASS,
-    database : process.env.DB_NAME
+    database : process.env.DB_NAME,
+    port     : process.env.DB_PORT
 });
 
 connection.connect((err) => {
@@ -45,6 +47,10 @@ app.listen(process.env.PORT, (err) => {
 });
 
 app.use(parser.urlencoded({ extended: false }))
+
+app.use(fileUpload({
+    createParentPath: true
+}));
 
 app.use((req,res,next)=>{
     console.log("new  connection")

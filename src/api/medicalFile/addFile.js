@@ -6,16 +6,27 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:31:55 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/10 21:58:33 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/11 18:32:21 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-function addMedicalFile(app, patientId, callback)
+function addMedicalFile(app, patientId, data, callback)
 {
-    const data = {fk_patient:patientId}
+    const newData ={
+                    summary:data.summary,
+                    fk_patient:patientId,
+                    title:data.title,
+                    insurance:data.insurance,
+                    fk_doctor:data.doctor,
+                    fk_insurance_type:data.insurance_type
+                }
+    if (undefined === data.insurance_type)
+        delete newData.insurance_type
+    if (undefined === data.fk_doctor)
+        delete newData.fk_doctor
     const query = 'insert into medical_file set ?;'
 
-    app.connection.query(query, data, (err, res)=>{
+    app.connection.query(query, newData, (err, res)=>{
         if (err)
             return callback(err)
         if (res.affectedRows > 0)

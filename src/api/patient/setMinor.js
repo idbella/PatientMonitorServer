@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minor.js                                           :+:      :+:    :+:   */
+/*   setMinor.js                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 19:13:07 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/10 21:43:58 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/12 10:51:57 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-function setPatientAsMinor(app,userId, data, callback)
+function setPatientAsMinor(app, patientId, data, callback)
 {
-    var query = 'select * from minor where minor.fk_user=?;'
-    const insertData = {mother:data.mother, father:data.father, fk_user:userId}
-    app.connection.query(query, userId, (err,res)=>{
+    var query = 'select * from minor where minor.fk_patient=?;'
+    const insertData = {mother:data.mother, father:data.father, fk_patient:patientId}
+    app.connection.query(query, patientId, (err,res)=>{
         if (err)
             return callback(err)
         if (res.length > 0)
         {
-            query =  'update minor set mother=?, father=? where fk_user=?;'
-            app.connection.query(query, [data.mother,data.father,userId], callback)
+            query =  'update minor set mother=?, father=? where fk_patient=?;'
+            app.connection.query(query, [data.mother,data.father, patientId], callback)
         }
         else
         {

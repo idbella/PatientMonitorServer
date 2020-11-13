@@ -6,13 +6,13 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/10 20:37:30 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/10 22:32:31 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/11 10:14:26 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 function editMedicalFile(app, fileId, data, callback)
 {
-    const newData = {insurance:data.insurance,summary:data.summary}
+    const newData = {title:data.title, insurance:data.insurance, summary:data.summary}
     const query = 'update medical_file set ? where id=?;'
 
     if (data.doctor)
