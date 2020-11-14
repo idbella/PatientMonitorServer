@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:29:02 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/14 15:36:19 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/14 22:06:30 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ app.use(session({
     saveUninitialized: true
 }))
 
-app.listen(process.env.PORT, (err) => {
+app.listen(process.env.PORT || 8080, (err) => {
     if (err)
         return console.log(err);
     console.log(`server started at http://localhost:${process.env.PORT}/`);
