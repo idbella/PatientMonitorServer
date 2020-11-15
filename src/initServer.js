@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:29:02 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/14 22:06:30 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/15 14:37:01 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,13 @@ const session       = require('express-session');
 const verifyAuth    = require('./api/auth/verifyAuth');
 const fileUpload    = require('express-fileupload')
 
-const connection = mysql.createConnection({
-    host     : process.env.DB_HOST,
-    user     : process.env.DB_USER,
-    password : process.env.DB_PASS,
-    database : process.env.DB_NAME,
-    port     : process.env.DB_PORT
-});
+const connection = mysql.createPool(process.env.CLEARDB_DATABASE_URL);
 
-connection.connect((err) => {
-    if (err)
-        console.log(err);
-    }
-);
+// connection.connect((err) => {
+//     if (err)
+//         console.log(err);
+//     }
+// );
 
 const app = express();
 
