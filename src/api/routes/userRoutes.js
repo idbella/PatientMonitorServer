@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 15:59:21 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/17 16:01:09 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/17 18:47:35 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ module.exports = (app) => {
                 console.log(err)
                 return response.sendStatus(err.code ? err.code : 500);
             }
-            response.send(res);
+            if (res && res[0])
+                response.json(res[0]);
+            else
+                res.sendStatus(404)
         })
     })
 
