@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 11:11:11 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/10 10:30:40 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/16 12:09:24 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ module.exports = (app, id, data, session, callback) => {
     if (role && session.userId != parseInt(id))
         new_data.fk_role = role;
     const query = `update user set ? where id=${id};`
-    
-	app.connection.query(query, new_data, callback);;
+    const   check_exist_query = 'select id from user where email =?;'
+    app.connection.query(check_exist_query, [email],
+        (err, res) => {
+            if (err)
+                return (callback(err))
+            if (res.length > 0)
+                return (callback({status:300, msg:"email already exist."}));
+            app.connection.query(query, new_data, callback)
+    })
 }

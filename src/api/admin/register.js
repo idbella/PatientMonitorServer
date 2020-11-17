@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:52:57 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/10 23:14:34 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/16 11:57:37 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ function register(app, data, callback) {
                     if (err)
                         return (callback(err))
                     if (res.length > 0)
-                        return (callback("email already exist."));
+                        return (callback({status:300, msg:"email already exist."}));
                     connection.query(query, newData, (err, res)=>{
                         if (err)
                             return (callback(err))

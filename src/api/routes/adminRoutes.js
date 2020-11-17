@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 17:56:08 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/11 17:41:02 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/16 12:11:11 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,13 @@ module.exports = (app) => {
 				(err, result) => {
 					if (err)
 					{
+						if (err.status)
+							return response.status(err.status).send(err.msg);
 						response.sendStatus(500);
 						return console.log(err);
-					} 2
+					}
+					if (result.affectedRows === 0)
+						return response.sendStatus(404);
 					response.sendStatus(200);
 				}
 			)
@@ -75,7 +79,8 @@ module.exports = (app) => {
 				(err, res) => {
 					if (err)
 					{
-						response.sendStatus(500);
+						if (err.status)
+							return response.status(err.status).send(err.msg);
 						return console.log(err);
 					}
 					console.log(res)

@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 15:59:21 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/12 10:48:16 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/17 16:01:09 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ module.exports = (app) => {
         }
     )
 
-    app.get('/api/users/:id', verifylogin, (request, response) =>{
-        viewUser(app, request.session, request.params.id, (err, res) => {
+    app.get('/api/profile', verifylogin, (request, response) =>{
+
+        viewUser(app, request.session.userId, (err, res) => {
             if (err)
             {
                 console.log(err)

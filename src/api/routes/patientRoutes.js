@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:45:34 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/12 11:02:57 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/16 11:31:39 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ module.exports = (app) => {
                 (err) => {
                     if (err)
                     {
+                        if (err.status)
+                            return response.status(err.status).send(err.msg);
                         console.log(err);
                         response.sendStatus(err.code ? err.code : 500);
                         return console.log(err);
