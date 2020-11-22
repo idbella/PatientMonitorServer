@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:45:06 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/11 17:27:47 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/22 09:43:40 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ const roles             = require('../const/roles')
 
 const MIN_NAME_LENGTH = 3
 const MAX_NAME_LENGTH = 100
-const MIN_CIN_LENGTH = 4
-const MAX_CIN_LENGTH = 10
 
 function verifyInput(input, minlength, maxlength){
     const length = input ? input.length:0
@@ -28,22 +26,15 @@ function verifyInput(input, minlength, maxlength){
 
 function register(app, data, callback) {
 
-    const   {email, first_name, last_name, phone, cin} = data
-    var     newData =
-            {
-                email:email, first_name:first_name,
-                last_name:last_name, phone:phone, role:roles.patient.id
-            };
+    const   {email, first_name, last_name, phone} = data
     
     if (!(verifyInput(first_name, MIN_NAME_LENGTH, MAX_NAME_LENGTH) &&
-        verifyInput(last_name, MIN_NAME_LENGTH, MAX_NAME_LENGTH) &&
-        verifyInput(cin, MIN_CIN_LENGTH, MAX_CIN_LENGTH)))
+        verifyInput(last_name, MIN_NAME_LENGTH, MAX_NAME_LENGTH)))
         return callback({code:400})
-
+    data.role = roles.patient.id
     registerHandler(app, data, (err, res)=>{
         if (err)
             return callback(err)
-        newData.userId = res.insertId
         addPatient(app, res.insertId, data, callback)
     });
 }
@@ -53,7 +44,7 @@ function addPatient(app,userId, data, callback){
     const   {connection} = app;
     var     newData =
     {
-        cin:data.cin, birthday:data.birthday,postalcode:data.postalcode,
+        cin:data.cin, birthday:data.birthday,postalcode:data.postalcode,address:data.address,
         country:data.country,sexe:data.sexe,city:data.city, fk_user:userId
     };
 

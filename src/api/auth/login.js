@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:51:39 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/10 22:59:04 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/20 09:45:51 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ module.exports = (app, data, callback) => {
                     return callback(err)
                 const {connection}  = app;
                 const {email}       = data
-                const query         = `SELECT user.id,role.id as role FROM user
+                const query         = `SELECT user.id, role.id as role, first_name,last_name FROM user
                                         INNER JOIN role on user.fk_role=role.id and
                                          user.email = ? and user.password = ?`;
                 connection.query(query, [

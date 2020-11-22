@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:45:34 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/16 11:31:39 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/21 19:42:03 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@ const addPatient        = require('../patient/add')
 const setPatientAsMinor = require('../patient/setMinor')
 const listPatients      = require('../patient/list')
 const roles             = require('../const/roles')
+const editPatient = require('../patient/edit')
 
 module.exports = (app) => {
 
@@ -40,6 +41,26 @@ module.exports = (app) => {
         }
     )
 
+    app.post('/api/patients/:patientId', verifyLogin,
+        (request, response) => {
+            if (request.session.role !== roles.receptionist.id)
+                return (response.sendStatus(401));
+            editPatient(app, request.params.patientId, request.body,
+                (err) => {
+                    if (err)
+                    {
+                        if (err.status)
+                            return response.status(err.status).send(err.msg);
+                        console.log(err);
+                        response.sendStatus(500);
+                        return console.log(err);
+                    }
+                    response.sendStatus(200);
+                }
+            )
+        }
+    )
+
     app.get('/api/patients/:id', verifyLogin, (req, res)=>{
         viewPatient(app, req.params.id, (err, result)=>{
             if (err)
@@ -53,7 +74,10 @@ module.exports = (app) => {
             return res.sendStatus(401)
         listPatients(app, (err, result)=>{
             if (err)
+            {
+                console.log(err);
                 return res.sendStatus(500)
+            }
             res.send(result)
         })
     })

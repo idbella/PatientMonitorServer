@@ -11,5 +11,6 @@ echo "
 
 email=$(cat /dev/urandom | head -c 5|base64)
 
-result=$(curl $cookie -d cin 2434 -d email=$email -d "password=admin" -d "first_name=admin" -d "last_name=admin" -d "birthday=16-02-2" localhost:8080/api/patient/ 2>&-)
+result=$(curl $cookie -d cin 2434 -d email=$email -d "password=admin" -d "first_name=admin" -d "last_name=admin" -d "birthday=16-02-2" localhost:8080/api/patient/)
+
 echo $result

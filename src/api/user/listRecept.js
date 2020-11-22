@@ -1,20 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   viewUser.js                                        :+:      :+:    :+:   */
+/*   listRecept.js                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/08 15:49:03 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/20 13:58:01 by sid-bell         ###   ########.fr       */
+/*   Created: 2020/11/22 09:05:00 by sid-bell          #+#    #+#             */
+/*   Updated: 2020/11/22 09:39:47 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-function viewUser(app, id, callback)
-{
-	const query = `select user.id, phone, first_name, email, title, fk_role as role from user
-					inner join role on user.id = ? and user.fk_role=role.id;`
-	app.connection.query(query, [id], callback);
-}
+module.exports = (app, callback) => {
 
-module.exports = viewUser;
+    const query = 'select user.id, first_name, last_name, email, creation_date, phone from user inner join role on role.id = user.fk_role and role.id = 5;'
+    app.connection.query(query, callback)
+}

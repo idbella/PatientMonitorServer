@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:29:02 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/15 18:51:53 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/21 17:00:38 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@ const fileUpload    = require('express-fileupload')
 const cors          = require('cors')
 const connection = mysql.createPool(process.env.CLEARDB_DATABASE_URL);
 
-// connection.connect((err) => {
-//     if (err)
-//         console.log(err);
-//     }
-// );
-
 const app = express();
 
 app.use(session({
@@ -36,10 +30,9 @@ app.use(session({
 
 app.use(cors({
     origin: function(origin, callback){
-        console.log(origin)
       return callback(null, true);
     }
-  }));
+}));
 
 app.listen(process.env.PORT || 8080, (err) => {
     if (err)

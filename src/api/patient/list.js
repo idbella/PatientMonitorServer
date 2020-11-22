@@ -6,13 +6,13 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 10:55:02 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/12 11:05:42 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/21 16:48:20 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 function listPatients(app, callback){
-    const query = 'SELECT user.id as userid,user.first_name,user.last_name,patient.cin,patient.id as patientid\
-                    from patient inner join user on user.id = patient.fk_user'
+    const query = 'SELECT user.id as userid,user.email, user.phone, user.first_name, user.last_name, patient.cin, patient.id as patientid,\
+                    country, postalcode, city,birthday,sexe from patient inner join user on user.id = patient.fk_user;'
     app.connection.query(query, callback)
 }
 

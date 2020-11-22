@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:52:03 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/17 15:22:30 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/22 08:54:24 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ module.exports =  (app) => {
 	const verifylogout = app.verifyAuth.verifylogout;
 
 	app.post('/api/login', verifylogout, (req, response) => {
-		console.log('access /api/login')
+
 		const {email, password} = req.body
 		if (email && password)
 		{
@@ -30,10 +30,9 @@ module.exports =  (app) => {
 					}
 					if (res.length === 1)
 					{
-						console.log(res[0]);
 						req.session.userId = res[0].id;
 						req.session.role = res[0].role;
-						response.send(res);
+						response.send(res[0]);
 					}
 					else
 						response.sendStatus(404);
