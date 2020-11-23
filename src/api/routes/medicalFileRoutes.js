@@ -6,10 +6,11 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:28:51 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/11 20:56:30 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/22 13:35:22 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+const { response } = require('express');
 const roles             = require('../const/roles')
 const addMedicalFile    = require('../medicalFile/addFile')
 const editMedicalFile	= require('../medicalFile/edit')
@@ -46,5 +47,14 @@ module.exports = (app) => {
 				response.sendStatus(200);
 			}
 		)
+	})
+
+	app.get('/api/insurance', verifyLogin, (req, res)=>{
+		const query = 'select * from insurance'
+		app.connection.query(query, (err, result)=>{
+			if (err)
+				return res.sendStatus(500)
+			res.json(result);
+		})
 	})
 }
