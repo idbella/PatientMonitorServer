@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:29:02 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/21 17:00:38 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/25 17:37:17 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ app.use(session({
 }))
 
 app.use(cors({
+    credentials:true,
     origin: function(origin, callback){
       return callback(null, true);
     }
