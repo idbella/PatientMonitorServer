@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:45:34 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/21 19:42:03 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/26 15:45:55 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,20 @@ const setPatientAsMinor = require('../patient/setMinor')
 const listPatients      = require('../patient/list')
 const roles             = require('../const/roles')
 const editPatient = require('../patient/edit')
+const responses = require('../const/responses')
+const deletePatient = require('../patient/deletePatient')
+const { response } = require('express')
+
+function random(length) {
+	var result           = '';
+	var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	var charactersLength = characters.length;
+	for ( var i = 0; i < length; i++ ) {
+	   result += characters.charAt(Math.floor(Math.random() * charactersLength));
+	}
+	return result;
+ }
+
 
 module.exports = (app) => {
 
@@ -25,6 +39,7 @@ module.exports = (app) => {
         (request, response) => {
             if (request.session.role !== roles.receptionist.id)
                 return (response.sendStatus(401));
+            request.body.password = random(5);
             addPatient(app, request.body,
                 (err) => {
                     if (err)
@@ -35,7 +50,7 @@ module.exports = (app) => {
                         response.sendStatus(err.code ? err.code : 500);
                         return console.log(err);
                     }
-                    response.sendStatus(200);
+                    response.send(request.body.password);
                 }
             )
         }
@@ -66,6 +81,23 @@ module.exports = (app) => {
             if (err)
                 return res.sendStatus(500)
             res.send(result)
+        })
+    })
+
+    app.delete('/api/patients/:id', verifyLogin, (req, res)=>{
+        if (req.session.role != roles.receptionist.id)
+            return res.sendStatus(responses.unauthorized.code)
+        deletePatient(app, req.params.id, (err, result)=>{
+            if (err)
+            {
+                if (err.code)
+                    return res.sendStatus(err.code)
+                return res.sendStatus(500)
+            }
+            if (result.affectedRows > 0)
+                res.sendStatus(responses.ok.code)
+            else
+                res.sendStatus(response.notfound.code)
         })
     })
 

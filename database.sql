@@ -17,7 +17,8 @@ CREATE TABLE `role` (
 
 CREATE TABLE `insurance` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `title` varchar(255)
+  `title` varchar(255),
+  'editable' boolean
 );
 
 CREATE TABLE `patient` (
@@ -36,6 +37,7 @@ CREATE TABLE `patient` (
 CREATE TABLE `medical_file` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255),
+  'motif' varchar(255)
   `creation_date` timestamp,
   `insurance` text,
   `summary` text,
