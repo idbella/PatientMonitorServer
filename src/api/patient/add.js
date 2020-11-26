@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:45:06 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/26 14:51:58 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/26 16:29:08 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ function addPatient(app, userId, data, callback){
 		if (err)
 			return callback(err)
 		if (result.affectedRows > 0)
-			addMedicalFile(app, result.insertId, {motif:data.motif}, callback)
+			addMedicalFile(app, result.insertId, data, callback)
 		else
 			callback("database error");
 	});
