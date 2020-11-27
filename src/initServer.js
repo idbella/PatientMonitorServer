@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:29:02 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/27 17:10:41 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/27 17:20:57 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ app.use(session({
     saveUninitialized: true
 }))
 
-app.use(cors({
-    credentials:true,
-}));
+app.use(cors());
 
 app.listen(process.env.PORT || 8080, (err) => {
     if (err)
