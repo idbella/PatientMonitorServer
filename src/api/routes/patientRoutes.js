@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:45:34 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/26 15:45:55 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/26 20:43:51 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ module.exports = (app) => {
         viewPatient(app, req.params.id, (err, result)=>{
             if (err)
                 return res.sendStatus(500)
-            res.send(result)
+            res.send(result[0]);
         })
     })
 

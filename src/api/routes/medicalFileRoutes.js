@@ -6,14 +6,14 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:28:51 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/22 13:35:22 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/26 20:48:03 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-const { response } = require('express');
-const roles             = require('../const/roles')
-const addMedicalFile    = require('../medicalFile/addFile')
-const editMedicalFile	= require('../medicalFile/edit')
+const roles             		= require('../const/roles')
+const addMedicalFile    		= require('../medicalFile/addFile')
+const editMedicalFile			= require('../medicalFile/edit')
+const listPatientMedicalFiles	= require('../patient/listFiles')
 
 module.exports = (app) => {
 
@@ -57,4 +57,14 @@ module.exports = (app) => {
 			res.json(result);
 		})
 	})
+
+	app.get('/api/patients/:id/files', verifyLogin, (req, res)=>{
+		if (roles.receptionist.id !== req.session.role)
+			return response.sendStatus(401)
+        listPatientMedicalFiles(app, req.params.id, (err, result)=>{
+            if (err)
+                return res.sendStatus(500)
+            res.send(result);
+        })
+    })
 }

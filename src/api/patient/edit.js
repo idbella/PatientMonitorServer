@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/21 18:23:05 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/21 19:29:54 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/26 17:49:40 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@ const viewPatient       = require('./viewPatient')
 
 function editPatient(app, patientId, data, callback) {
 
-    console.log('edit patient ' + patientId)
     viewPatient(app, patientId, (err, result)=>{
         if (err)
             return callback(err)
