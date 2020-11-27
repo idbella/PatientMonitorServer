@@ -6,13 +6,14 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:28:51 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/26 20:48:03 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/27 19:11:37 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 const roles             		= require('../const/roles')
 const addMedicalFile    		= require('../medicalFile/addFile')
 const editMedicalFile			= require('../medicalFile/edit')
+const dropMedicalFile			= require('../medicalFile/delete')
 const listPatientMedicalFiles	= require('../patient/listFiles')
 
 module.exports = (app) => {
@@ -39,6 +40,20 @@ module.exports = (app) => {
 			return response.sendStatus(401)
 		editMedicalFile(app, request.params.fileId, request.body,
 			(err, result) => {
+				if (err)
+				{
+					response.sendStatus(500);
+					return console.log(err);
+				}
+				response.sendStatus(200);
+			}
+		)
+	})
+
+	app.delete('/api/file/:fileId', verifyLogin, (request, response) => {
+		if (roles.receptionist.id !== request.session.role)
+			return response.sendStatus(401)
+		dropMedicalFile(app, request.params.fileId, (err, result) => {
 				if (err)
 				{
 					response.sendStatus(500);
