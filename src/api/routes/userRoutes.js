@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 15:59:21 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/25 17:37:23 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/28 14:52:17 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@ const viewUser          = require('../user/viewUser')
 const listDoctors       = require('../user/listDoctors');
 const roles             = require('../const/roles');
 const listRecept        = require('../user/listRecept');
+const listNurses		= require('../user/listNurses')
 
 module.exports = (app) => {
 
@@ -70,6 +71,19 @@ module.exports = (app) => {
 		if (request.session.role != roles.admin.id)
 			return response.sendStatus(401);
 		listRecept(app, (err, res) => {
+			if (err)
+			{
+				console.log(err)
+				return response.sendStatus(500);
+			}
+			response.json(res);
+		})
+	})
+
+	app.get('/api/nurses', verifylogin, (request, response) =>{
+		if (request.session.role != roles.admin.id)
+			return response.sendStatus(401);
+		listNurses(app, (err, res) => {
 			if (err)
 			{
 				console.log(err)
