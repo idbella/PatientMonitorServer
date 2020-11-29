@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 15:59:21 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/28 14:52:17 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/29 21:17:43 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ module.exports = (app) => {
 	})
 
 	app.get('/api/doctors', verifylogin, (request, response) =>{
-		if (request.session.role != roles.admin.id)
+		const role = request.session.role;
+		if ((role != roles.admin.id && role != roles.receptionist.id))
 			return response.sendStatus(401);
 		listDoctors(app, (err, res) => {
 			if (err)
