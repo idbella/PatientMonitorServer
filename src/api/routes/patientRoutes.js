@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:45:34 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/26 20:43:51 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/29 10:16:02 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ module.exports = (app) => {
     )
 
     app.get('/api/patients/:id', verifyLogin, (req, res)=>{
+        const role = req.session.role
+        if (!(role == roles.receptionist.id || role == roles.doctor.id))
+            return res.sendStatus(responses.unauthorized.code)
         viewPatient(app, req.params.id, (err, result)=>{
             if (err)
                 return res.sendStatus(500)
@@ -102,8 +105,9 @@ module.exports = (app) => {
     })
 
     app.get('/api/patients/', verifyLogin, (req, res) => {
-        if (req.session.role != roles.receptionist.id)
-            return res.sendStatus(401)
+        const role = req.session.role
+        if (!(role == roles.receptionist.id || role == roles.doctor.id))
+            return res.sendStatus(responses.unauthorized.code)
         listPatients(app, (err, result)=>{
             if (err)
             {
