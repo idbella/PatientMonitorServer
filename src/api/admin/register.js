@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:52:57 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/22 08:53:29 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/30 11:41:24 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ const roles     = require('../const/roles')
 function register(app, data, callback) {
 
     const   {connection} = app;
-    const   {email, first_name, last_name, phone, role} = data
-    var     newData = {email:email, first_name:first_name, last_name:last_name, phone:phone, fk_role:role};
+    const   {title, email, first_name, last_name, phone, role} = data
+    var     newData = {title:title,email:email, first_name:first_name, last_name:last_name, phone:phone, fk_role:role};
     const   query = `insert into user set ?;`;
     const   check_exist_query = 'select id from user where email =?;'
 
@@ -32,23 +32,11 @@ function register(app, data, callback) {
                         return (callback(err))
                     if (res.length > 0)
                         return (callback({status:300, msg:"email already exist."}));
-                    connection.query(query, newData, (err, res)=>{
-                        if (err)
-                            return (callback(err))
-                        if (res.insertId && newData.fk_role == roles.doctor.id)
-                            registerDoctor(app, res.insertId, callback)
-                        else
-                            callback(err, res);
-                    });
+                    connection.query(query, newData, callback);
             })
         }
     );
 }
 
-function registerDoctor(app, userId, callback)
-{
-    const query = "insert into doctor set fk_user=? ;"
-    app.connection.query(query, [userId], callback)
-}
 
 module.exports = register;
