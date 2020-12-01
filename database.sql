@@ -105,37 +105,37 @@ CREATE TABLE `answer_choice` (
   `fk_question` int
 );
 
-ALTER TABLE `medical_file` ADD FOREIGN KEY (`fk_insurance_type`) REFERENCES `insurance` (`id`) on delete cascade;
+ALTER TABLE `medical_file` ADD FOREIGN KEY (`fk_insurance_type`) REFERENCES `insurance` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `answer_choice` ADD FOREIGN KEY (`fk_question`) REFERENCES `question` (`id`) on delete cascade;
+ALTER TABLE `answer_choice` ADD FOREIGN KEY (`fk_question`) REFERENCES `question` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `predefined_questionnaire` ADD FOREIGN KEY (`fk_questionnaire`) REFERENCES `questionnaire` (`id`) on delete cascade;
+ALTER TABLE `predefined_questionnaire` ADD FOREIGN KEY (`fk_questionnaire`) REFERENCES `questionnaire` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `answer` ADD FOREIGN KEY (`fk_question`) REFERENCES `question` (`id`) on delete cascade;
+ALTER TABLE `answer` ADD FOREIGN KEY (`fk_question`) REFERENCES `question` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `question` ADD FOREIGN KEY (`fk_questionnaire`) REFERENCES `questionnaire` (`id`) on delete cascade;
+ALTER TABLE `question` ADD FOREIGN KEY (`fk_questionnaire`) REFERENCES `questionnaire` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `questionnaire` ADD FOREIGN KEY (`fk_patient`) REFERENCES `patient` (`id`) on delete cascade;
+ALTER TABLE `questionnaire` ADD FOREIGN KEY (`fk_patient`) REFERENCES `patient` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `attachment` ADD FOREIGN KEY (`fk_medical_file`) REFERENCES `medical_file` (`id`) on delete cascade;
+ALTER TABLE `attachment` ADD FOREIGN KEY (`fk_medical_file`) REFERENCES `medical_file` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `attachment` ADD FOREIGN KEY (`fk_user`) REFERENCES `user` (`id`) on delete cascade;
+ALTER TABLE `attachment` ADD FOREIGN KEY (`fk_user`) REFERENCES `user` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `note` ADD FOREIGN KEY (`fk_medical_file`) REFERENCES `medical_file` (`id`) on delete cascade;
+ALTER TABLE `note` ADD FOREIGN KEY (`fk_medical_file`) REFERENCES `medical_file` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `note` ADD FOREIGN KEY (`fk_user`) REFERENCES `user` (`id`) on delete cascade;
+ALTER TABLE `note` ADD FOREIGN KEY (`fk_user`) REFERENCES `user` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `user` ADD FOREIGN KEY (`fk_role`) REFERENCES `role` (`id`) on delete cascade;
+ALTER TABLE `user` ADD FOREIGN KEY (`fk_role`) REFERENCES `role` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `patient` ADD FOREIGN KEY (`fk_user`) REFERENCES `user` (`id`) on delete cascade;
+ALTER TABLE `patient` ADD FOREIGN KEY (`fk_user`) REFERENCES `user` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `medical_file` ADD FOREIGN KEY (`fk_doctor`) REFERENCES `user` (`id`) on delete cascade;
+ALTER TABLE `medical_file` ADD FOREIGN KEY (`fk_doctor`) REFERENCES `user` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `patient` ADD FOREIGN KEY (`fk_current_mFile`) REFERENCES `medical_file` (`id`) on delete cascade;
+ALTER TABLE `patient` ADD FOREIGN KEY (`fk_current_mFile`) REFERENCES `medical_file` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `medical_file` ADD FOREIGN KEY (`fk_patient`) REFERENCES `patient` (`id`) on delete cascade;
+ALTER TABLE `medical_file` ADD FOREIGN KEY (`fk_patient`) REFERENCES `patient` (`id`) on delete cascade on update cascade;
 
-ALTER TABLE `minor` ADD FOREIGN KEY (`fk_patient`) REFERENCES `patient` (`id`) on delete cascade;
+ALTER TABLE `minor` ADD FOREIGN KEY (`fk_patient`) REFERENCES `patient` (`id`) on delete cascade on update cascade;
 
 
 
