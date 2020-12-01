@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 10:51:41 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/13 21:44:08 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/01 17:02:12 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,23 +97,23 @@ module.exports = (app) => {
 		})
 	})
 
-	// app.get('/api/file/:fileId/attachments/', (request, response) => {
+	app.get('/api/file/:fileId/attachments/', (request, response) => {
 	
-	// 	const role = request.session.userId
-	// 	const userId = request.params.fileId
+		const role = request.session.role
+		const fileId = request.params.fileId
 
-	// 	if (!(role == roles.doctor.id || role == roles.nurse.id))
-	// 		return response.sendStatus(401)
-	// 	listAttachment(app, , (err, res)=>{
-	// 		if (err)
-	// 		{
-	// 			console.log(err)
-	// 			return response.sendStatus(500)
-	// 		}
-	// 		if (res && res.length > 0)
-	// 			response.send(res)
-	// 		else
-	// 			response.sendStatus(404)
-	// 	})
-	// })
+		if (!(role == roles.doctor.id || role == roles.nurse.id))
+			return response.sendStatus(401)
+		listAttachment(app, fileId, (err, res) => {
+			if (err)
+			{
+				console.log(err)
+				return response.sendStatus(500)
+			}
+			if (res && res.length > 0)
+				response.send(res)
+			else
+				response.sendStatus(404)
+		})
+	})
 }
