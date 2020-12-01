@@ -6,14 +6,14 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:31:55 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/26 14:34:51 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/30 10:09:33 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 function addMedicalFile(app, patientId, data, callback)
 {
     const newData = {
-                    summary:data.summary,
+                    // summary:data.summary,
                     fk_patient:patientId,
                     title:data.title,
                     motif:data.motif,

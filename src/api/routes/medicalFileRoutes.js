@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:28:51 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/29 10:26:49 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/11/30 19:21:55 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ module.exports = (app) => {
 	app.get('/api/patients/:id/files', verifyLogin, (req, res)=>{
 		const role = req.session.role
         if (!(role == roles.receptionist.id || role == roles.doctor.id))
-            return res.sendStatus(responses.unauthorized.code)
+            return res.sendStatus(401)
         listPatientMedicalFiles(app, req.params.id, (err, result)=>{
             if (err)
                 return res.sendStatus(500)
