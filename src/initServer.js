@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:29:02 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/01 23:23:34 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/02 15:59:08 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ const connection    = mysql.createPool(process.env.CLEARDB_DATABASE_URL);
 const app = express();
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Headers', '*');
   res.header("Access-Control-Allow-Methods", "OPTIONS, POST, GET, PUT, DELETE");
   if ('OPTIONS' == req.method) {
       return res.sendStatus(200);
