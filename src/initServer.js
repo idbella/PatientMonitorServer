@@ -23,7 +23,15 @@ const jwt           = require('jsonwebtoken')
 const connection    = mysql.createPool(process.env.CLEARDB_DATABASE_URL);
 
 const app = express();
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "OPTIONS, POST, GET, PUT, DELETE");
+  if ('OPTIONS' == req.method) {
+      return res.sendStatus(200);
+  } else {
+      next();
+  }
+});
 app.use(cors({
     origin: function(origin, callback){
       return callback(null, true);
