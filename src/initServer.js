@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:29:02 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/02 15:59:08 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/03 10:28:59 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ app.use((req, res, next)=>{
                 return res.status(403).send('invalid token')
             else
                 req.session = user
-            console.log(user)
             next();
         })
     }
