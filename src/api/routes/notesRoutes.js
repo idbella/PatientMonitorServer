@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 18:52:08 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/13 10:20:19 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/04 12:37:09 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ module.exports = (app) => {
         const role = request.session.role;
         if (role != roles.nurse.id && role != roles.doctor.id)
             return response.sendStatus(401)
-        getNotes(app, request.params.fileId, (err, res)=>{
+        getNotes(app, request.session, request.params.fileId, (err, res)=>{
             if (err)
             {
                 console.log(err)

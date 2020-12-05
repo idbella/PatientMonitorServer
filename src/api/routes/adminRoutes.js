@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 17:56:08 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/17 18:46:13 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/03 22:05:03 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,10 @@ module.exports = (app) => {
 
 	app.post('/api/admin/users/:id', verifyAdmin,
 		(request, response) => {
-			editUser(app, request.params.id, request.body, request.session,
+			const userId = parseInt(request.params.id)
+			if (isNaN(userId))
+				return response.sendStatus(400);
+			editUser(app, userId, request.body, request.session,
 				(err, result) => {
 					if (err)
 					{

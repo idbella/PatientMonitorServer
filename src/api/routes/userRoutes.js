@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 15:59:21 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/01 23:55:52 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/04 11:28:24 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ module.exports = (app) => {
 
 	app.get('/api/doctors', verifylogin, (request, response) =>{
 		const role = request.session.role;
-		if ((role != roles.admin.id && role != roles.receptionist.id && roles.doctor.id != role))
+		const admin = roles.admin.id
+		const recep = roles.receptionist.id
+		const nurse = roles.nurse.id
+		const doctor = roles.doctor.id
+		if ((role != admin && role != recep && doctor != role && nurse != role))
 			return response.sendStatus(401);
 		listDoctors(app, (err, res) => {
 			if (err)

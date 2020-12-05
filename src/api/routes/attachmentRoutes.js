@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 10:51:41 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/01 17:02:12 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/03 16:39:34 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ module.exports = (app) => {
 			response.sendStatus(400)
 	})
 
-	app.delete('/api/file/:fileId/attachments/:id', (request, response) => {
+	app.delete('/api/attachments/:id', (request, response) => {
 	
 		const role = request.session.role
 		const userId = request.session.userId
@@ -71,7 +71,7 @@ module.exports = (app) => {
 		})
 	})
 
-	app.get('/api/file/:fileId/attachments/:id', (request, response) => {
+	app.get('/api/attachments/:id', (request, response) => {
 	
 		const role = request.session.role
 		const userId = request.session.userId
@@ -86,11 +86,7 @@ module.exports = (app) => {
 			}
 			if (res && res[0])
 			{
-				newData = {
-						id:res[0].id//,
-						//url:`${process.env.}`
-					}
-				response.send(res)
+				response.send(res[0])
 			}
 			else
 				response.sendStatus(404)
@@ -116,4 +112,33 @@ module.exports = (app) => {
 				response.sendStatus(404)
 		})
 	})
+
+	app.get('/api/attachment/:id/download/', (request, response) => {
+		
+		const role = request.session.role
+		const attachmentId = request.params.id
+
+		if (!(role == roles.doctor.id || role == roles.nurse.id))
+			return response.sendStatus(401)
+		getAttachment(app, request.params.id, (err, res)=>{
+			if (err)
+			{
+				console.log(err)
+				return response.sendStatus(500)
+			}
+			if (res && res[0])
+			{
+				return response.download('resources/attachments/' + res[0].file_path, res[0].file_name, (err)=>{
+					if (err)
+					{
+						console.log(err)
+						response.send('unknown error');
+					}
+			})
+			}
+			else
+				response.sendStatus(404)
+		})
+	})
+
 }
