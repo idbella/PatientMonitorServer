@@ -70,8 +70,9 @@ CREATE TABLE `attachment` (
   `file_path` varchar(255),
   `title` varchar(255),
   `fk_medical_file` int,
+  `permissions` int,
   `fk_user` int,
-  `permissions` int
+  `fk_type` int
 );
 
 CREATE TABLE `questionnaire` (
@@ -105,6 +106,11 @@ CREATE TABLE `answer_choice` (
   `fk_question` int
 );
 
+CREATE TABLE `attachment_type` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `title` varchar(255)
+);
+
 ALTER TABLE `medical_file` ADD FOREIGN KEY (`fk_insurance_type`) REFERENCES `insurance` (`id`) on delete cascade on update cascade;
 
 ALTER TABLE `answer_choice` ADD FOREIGN KEY (`fk_question`) REFERENCES `question` (`id`) on delete cascade on update cascade;
@@ -120,6 +126,8 @@ ALTER TABLE `questionnaire` ADD FOREIGN KEY (`fk_patient`) REFERENCES `patient` 
 ALTER TABLE `attachment` ADD FOREIGN KEY (`fk_medical_file`) REFERENCES `medical_file` (`id`) on delete cascade on update cascade;
 
 ALTER TABLE `attachment` ADD FOREIGN KEY (`fk_user`) REFERENCES `user` (`id`) on delete cascade on update cascade;
+
+ALTER TABLE `attachment` ADD FOREIGN KEY (`fk_type`) REFERENCES `attachment_type` (`id`) on delete cascade on update cascade;
 
 ALTER TABLE `note` ADD FOREIGN KEY (`fk_medical_file`) REFERENCES `medical_file` (`id`) on delete cascade on update cascade;
 
@@ -152,19 +160,18 @@ INSERT INTO `insurance` (`title`, `editable`) VALUES
               ('mutuelle a preciser', 0); 
 
 INSERT INTO `role` (`id`, `title`, `permissions`) VALUES
-(1, 'admin', 16384),
-(2, 'doctor', 1792),
-(3, 'nurse', 48),
+(1, 'admin', 1),
+(2, 'doctor', 2),
+(3, 'nurse', 4),
 (4, 'patient', 8),
-(5, 'receptionist', 0);
+(5, 'receptionist', 16);
 
 INSERT INTO `user`
 (`id`, `title`, `email`, `password`, 														`first_name`, 	`last_name`, `phone`, `fk_role`)VALUES
 (1, 'admin', 'admin', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa', 		'said', 		'blalla', NULL, 1),
 (2, 'doc title', 'doctor', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa',		'tabib', 		'admin', NULL, 2),
 (3, 'nurse title', 'nurse', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa', 		'momarida', 	'admin', NULL, 3),
-(4, '', 'patient', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa', 		'marid', 		'admin', NULL, 4),
-(5, 'recep', 'receptionist', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa', 'mosta9bil',	'admin', NULL, 5);
+(5, 'recep', 'recep', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa', 'mosta9bil',	'admin', NULL, 5);
 
-
+INSERT INTO `attachment_type` (`id`, `title`) VALUES (NULL, 'image'), (NULL, 'document'); 
   
