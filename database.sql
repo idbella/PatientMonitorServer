@@ -156,8 +156,9 @@ ALTER TABLE `user` CHANGE `creation_date` `creation_date` TIMESTAMP NULL DEFAULT
 INSERT INTO `insurance` (`title`, `editable`) VALUES 
               ('Payante', 0),
               ('CNOPS', 0),
-              ('Assurances a preciser', 0),
-              ('mutuelle a preciser', 0); 
+              ('Assurances a preciser', 1),
+              ('Mutuelle a preciser', 1),
+              ('Autre', 1);  
 
 INSERT INTO `role` (`id`, `title`, `permissions`) VALUES
 (1, 'admin', 1),
