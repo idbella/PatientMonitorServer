@@ -75,6 +75,13 @@ CREATE TABLE `attachment` (
   `fk_type` int
 );
 
+CREATE TABLE `attach` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `file_name` varchar(255),
+  `file_path` varchar(255),
+  `fk_attachment` int
+);
+
 CREATE TABLE `questionnaire` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `fk_patient` int
@@ -110,6 +117,8 @@ CREATE TABLE `attachment_type` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255)
 );
+
+ALTER TABLE `attach` ADD FOREIGN KEY (`fk_attachment`) REFERENCES `attachment` (`id`) on delete cascade on update cascade;
 
 ALTER TABLE `medical_file` ADD FOREIGN KEY (`fk_insurance_type`) REFERENCES `insurance` (`id`) on delete cascade on update cascade;
 
