@@ -6,12 +6,33 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 18:35:41 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/13 18:36:08 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/07 20:35:13 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 module.exports = (app, fileId, callback) => {
-    const query = 'select * from attachment where fk_medical_file=?;'
+    const query = 'select id,creation_date,title,fk_user as userId,fk_type as type from attachment where fk_medical_file=?;'
 
-    app.connection.query(query, fileId, callback)
+    app.connection.query(query, fileId, (err, attachments)=>{
+        if (err)
+            return (callback(err))
+        var array = []
+        try{
+            attachments.forEach(attachment => {
+                const find_attach_query = 'select id,file_name from attach where fk_attachment = ?;'
+                app.connection.query(find_attach_query, attachment.id, (err, attach)=>{
+                    if (err)
+                        throw Error('e');
+                    attachment.files = attach
+                    delete attachment.permissions
+                    array.push(attachment)
+                    console.log(array.length)
+                    if (array.length == attachments.length)
+                        callback(err, array)
+                })
+            })
+        }catch(e){
+            callback(e)
+        }
+    })
 }
