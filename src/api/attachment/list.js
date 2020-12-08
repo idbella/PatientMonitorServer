@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 18:35:41 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/07 20:35:13 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/07 22:24:47 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ module.exports = (app, fileId, callback) => {
                     attachment.files = attach
                     delete attachment.permissions
                     array.push(attachment)
-                    console.log(array.length)
                     if (array.length == attachments.length)
                         callback(err, array)
                 })

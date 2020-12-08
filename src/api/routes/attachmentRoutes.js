@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 10:51:41 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/03 16:39:34 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/08 00:10:13 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@ const add           = require('../attachment/add')
 const getAttachment = require('../attachment/get')
 const dropAttachment= require('../attachment/drop')
 const listAttachment= require('../attachment/list')
+const getFile		= require('../attachment/getFile')
 
 module.exports = (app) => {
 	app.post('/api/file/:fileId/attachments', (request, response) => {
@@ -113,14 +114,14 @@ module.exports = (app) => {
 		})
 	})
 
-	app.get('/api/attachment/:id/download/', (request, response) => {
+	app.get('/api/download/:fileId', (request, response) => {
 		
-		const role = request.session.role
-		const attachmentId = request.params.id
+		const role			= request.session.role
+		const fileId		= request.params.fileId
 
 		if (!(role == roles.doctor.id || role == roles.nurse.id))
 			return response.sendStatus(401)
-		getAttachment(app, request.params.id, (err, res)=>{
+		getFile(app, fileId, (err, res)=>{
 			if (err)
 			{
 				console.log(err)
@@ -134,7 +135,7 @@ module.exports = (app) => {
 						console.log(err)
 						response.send('unknown error');
 					}
-			})
+				})
 			}
 			else
 				response.sendStatus(404)
