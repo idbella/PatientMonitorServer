@@ -6,22 +6,20 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 12:07:47 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/13 18:26:59 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/08 18:02:06 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 const fs = require('fs')
 
-module.exports = (app, userId, fileId, fileName, callback) => {
+module.exports = (app, userId, attachmentId, callback) => {
     
-    const dropQuery     = 'delete from attachment where fk_user=? and fk_medical_file=?;'
+    const dropQuery     = 'delete from attachment where fk_user=? and id=?;'
 
-    const q = app.connection.query(dropQuery, [userId, fileId], (err, res)=>{
+    
+    const q = app.connection.query(dropQuery, [userId, attachmentId], (err, res)=>{
         if (err)
             return (callback(err))
-        const filePath = `${process.env.ATTACHMENT_DIR}/${fileName}`
-        fs.unlink(filePath,(err)=>console.log(err))
         callback(err, res)
     })
-    console.log(q)
 }

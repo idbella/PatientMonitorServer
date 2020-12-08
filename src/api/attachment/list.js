@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 18:35:41 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/07 22:24:47 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/08 17:56:57 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ module.exports = (app, fileId, callback) => {
                 const find_attach_query = 'select id,file_name from attach where fk_attachment = ?;'
                 app.connection.query(find_attach_query, attachment.id, (err, attach)=>{
                     if (err)
-                        throw Error('e');
+                        return console.log(err)
                     attachment.files = attach
                     delete attachment.permissions
                     array.push(attachment)
