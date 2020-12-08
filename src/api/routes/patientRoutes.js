@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:45:34 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/04 11:35:09 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/08 12:12:29 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ module.exports = (app) => {
 		const doctor = roles.doctor.id
 		if ((role != recep && doctor != role && nurse != role))
 			return response.sendStatus(401);
-        listPatients(app, (err, result)=>{
+        listPatients(app, req.session, (err, result)=>{
             if (err)
             {
                 console.log(err);
