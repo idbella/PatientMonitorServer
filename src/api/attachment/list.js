@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 18:35:41 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/08 17:56:57 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/08 19:16:16 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ module.exports = (app, fileId, callback) => {
             return (callback(err))
         var array = []
         try{
+            if (attachments.length == 0)
+                return callback(err, attachments);
             attachments.forEach(attachment => {
                 const find_attach_query = 'select id,file_name from attach where fk_attachment = ?;'
                 app.connection.query(find_attach_query, attachment.id, (err, attach)=>{
