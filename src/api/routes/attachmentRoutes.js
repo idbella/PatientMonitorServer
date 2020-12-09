@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 10:51:41 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/08 18:06:54 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/09 01:03:40 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ module.exports = (app) => {
 
 		if (!(role == roles.doctor.id || role == roles.nurse.id))
 			return response.sendStatus(401)
-		console.log('drop ' + request.params.id);
 		dropAttachment(app, userId, request.params.id, (err, res)=>{
 			if (err)
 			{
@@ -149,4 +148,34 @@ module.exports = (app) => {
 		})
 	})
 
+	app.get('/api/youssef/:fileId/', (request, response) => {
+	
+		const role = request.session.role
+		const fileId = request.params.fileId
+
+		if (!(role == roles.doctor.id || role == roles.nurse.id))
+			return response.sendStatus(401)
+		listAttachment(app, fileId, (err, res) => {
+			if (err)
+			{
+				console.log(err)
+				return response.sendStatus(500)
+			}
+			if (res && res.length > 0)
+			{
+				var li = '';
+				res.forEach(att => {
+					att.files.forEach(file=>{
+						if (li.length > 0)
+							li += '\n'
+						li += 'https://idbella.herokuapp.com/api/download/' + file.id
+					})
+				});
+				response.send(li);
+			}
+			else
+				response.sendStatus(404)
+		})
+	})
+	
 }
