@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:30:52 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/15 15:01:44 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/03 11:12:00 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ app.get("/", (request, response) => {
 	response.send("server is working");
 })
 
-app.get("/mail", (request, response) => {
-	sendMail('idbellasaid@gmail.com', 'fdsf', 'sf',)
+app.get("/mail/:content", (request, response) => {
+	sendMail('idbellasaid@gmail.com', 'subject', request.params.content, (err, res)=>{
+		if (err)
+			console.log(err)
+	})
 	response.send("ok")	
 })

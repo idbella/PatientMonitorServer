@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/13 10:51:41 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/09 01:03:40 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/11 11:44:19 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@ const getAttachment = require('../attachment/get')
 const dropAttachment= require('../attachment/drop')
 const listAttachment= require('../attachment/list')
 const getFile		= require('../attachment/getFile')
+const http			= require('https')
+
+var download = function(url ,res) {
+	var request = http.get(url, function(response) {
+	  response.pipe(res);
+	}).on('error', function(err) {
+		console.log(err);
+		res.sendStatus(500)
+	});
+  };
 
 module.exports = (app) => {
 	app.post('/api/file/:fileId/attachments', (request, response) => {
@@ -44,10 +54,9 @@ module.exports = (app) => {
 
 		if (!(role == roles.doctor.id || role == roles.nurse.id))
 			return response.sendStatus(401)
-		console.log(request.files)
 		if (request.files)
 		{
-			addFile(app, userId, request.params.attachmentId, request.files.file, request.body,
+			addFile(app, userId, request.params.attachmentId, request.files.file,
 				(err, res) => {
 					if (err)
 					{
@@ -135,13 +144,8 @@ module.exports = (app) => {
 			}
 			if (res && res[0])
 			{
-				return response.download('resources/attachments/' + res[0].file_path, res[0].file_name, (err)=>{
-					if (err)
-					{
-						console.log(err)
-						return response.send('unknown error');
-					}
-				})
+				var url = 'https://bucketeer-b7cb112f-6d70-44fe-835f-010f16ada331.s3.amazonaws.com/public/' + res[0].file_path
+				download(url, response)
 			}
 			else
 				response.sendStatus(404)
