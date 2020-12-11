@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 11:48:56 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/21 19:43:03 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/11 23:15:18 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ module.exports = (app, userId, data, callback) => {
                     app.connection.query(query, newData, callback)
                 })
             }
-            app.connection.query(query, newData, callback) 
+            else
+                app.connection.query(query, newData, callback) 
     })
 }
 

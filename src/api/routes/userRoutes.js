@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 15:59:21 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/04 11:28:24 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/11 23:13:20 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ module.exports = (app) => {
 	app.post('/api/users/:id', verifylogin,
 		(request, response) => {
 			userId = request.session.userId;
-			if (userId != request.params.userId)
+			if (userId != request.params.id)
 				return (response.sendStatus(401));
 			editUser(app, userId, request.body,
 				(err, result) => {
