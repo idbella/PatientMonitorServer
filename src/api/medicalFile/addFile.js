@@ -6,24 +6,27 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:31:55 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/11/30 10:09:33 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/13 14:41:53 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+const addnurses = require('../medicalFile/nurses')
 
 function addMedicalFile(app, patientId, data, callback)
 {
     const newData = {
-                    // summary:data.summary,
-                    fk_patient:patientId,
-                    title:data.title,
-                    motif:data.motif,
-                    insurance:data.insurance,
-                    fk_doctor:data.doctor,
-                    fk_insurance_type:data.insurance_type
-                }
+        fk_patient:patientId,
+        title:data.title,
+        motif:data.motif,
+        insurance:data.insurance,
+        fk_doctor:data.doctor,
+        fk_insurance_type:data.insurance_type,
+        nurses:data.nurses
+    }
+    console.log(newData)
     if (undefined === data.insurance_type)
         delete newData.insurance_type
-    if (undefined === data.fk_doctor)
+    if (undefined === data.doctor)
         delete newData.fk_doctor
 
     const query = 'insert into medical_file set ?;'
@@ -31,8 +34,9 @@ function addMedicalFile(app, patientId, data, callback)
     app.connection.query(query, newData, (err, res)=>{
         if (err)
             return callback(err)
-        if (res.affectedRows > 0)
+        if (res.affectedRows > 0){
             setCurrentMedicalFile(app, patientId, res.insertId, callback)
+        }
         else
             callback("database error");
     })
