@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:52:57 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/13 18:15:50 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/13 22:46:07 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ function register(app, data, callback) {
                     connection.query(query, newData, (err, result)=>{
                         if (err)
                             return callback(err)
-                        else
+                        else if (data.role != roles.patient.id)
                             sendMail(newData.email, 'Account created | Digital Hospital', '', getHtmlMessage(data))
                         callback(err, result)
                     });
@@ -56,10 +56,20 @@ function register(app, data, callback) {
     );
 }
 
+function getType(id)
+{
+    if (id == roles.doctor.id)
+        return 'Doctor'
+    if (id == roles.receptionist.id)
+        return 'Receptionsit'
+    if (id == roles.nurse.id)
+        return 'Nurse'
+}
+
 function getHtmlMessage(data){
     var html = `<h3>Hi ${data.first_name} ${data.last_name}</h3>
     <p>this email is a validation email from XR Patient Monitoring App</p>
-    <p>You have been added as type in Patient Monitoring here is your credentials</p>
+    <p>You have been added as ${getType(data.role)} in Patient Monitoring here is your credentials</p>
     <p><b>user name : </b>${data.email}</p>
     <p><b>password : </b>${data.password}</p>
     <p>please change your password</p>`
