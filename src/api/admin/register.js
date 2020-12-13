@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:52:57 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/13 17:57:59 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/13 18:01:58 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,12 @@ function register(app, data, callback) {
                         return (callback(err))
                     if (res.length > 0)
                         return (callback({status:300, msg:"email already exist."}));
-                    connection.query(query, newData, (err)=>{
+                    connection.query(query, newData, (err, result)=>{
                         if (err)
                             return callback(err)
                         else
                             sendMail(newData.email, 'Account created | Digital Hospital', '', getHtmlMessage(data))
+                        callback(err, result)
                     });
             })
         }
