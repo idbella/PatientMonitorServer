@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:45:34 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/11 23:33:00 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/13 17:48:10 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,6 @@ const editPatient       = require('../patient/edit')
 const responses         = require('../const/responses')
 const deletePatient     = require('../patient/deletePatient')
 const sendMail          = require('../sendMail')
-
-function random(length) {
-	var result           = '';
-	var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	var charactersLength = characters.length;
-	for ( var i = 0; i < length; i++ ) {
-	   result += characters.charAt(Math.floor(Math.random() * charactersLength));
-	}
-	return result;
- }
 
 
 function format(userId, email, password)
@@ -45,7 +35,6 @@ module.exports = (app) => {
             const userId = request.session.userId
             if (request.session.role !== roles.receptionist.id)
                 return (response.sendStatus(401));
-            request.body.password = random(5);
             addPatient(app, request.body,
                 (err) => {
                     if (err)
