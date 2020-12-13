@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:52:57 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/13 18:01:58 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/13 18:06:20 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ function getHtmlMessage(data){
     <p><b>user name</b>${data.email}</p>
     <p><b>password</b>${data.password}</p>
     <p>please change your password</p>`
+    return html
 }
 
 module.exports = register;
