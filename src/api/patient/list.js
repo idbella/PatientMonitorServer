@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/12 10:55:02 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/13 16:07:24 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/19 18:46:53 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ function listPatients(app, user, callback){
 
 	var query = 'SELECT nurses, user.id as userid,user.email, patient.address, user.phone, user.first_name, user.last_name, patient.cin, patient.id as patientid,\
 					country, postalcode, city,birthday,sexe from patient inner join user on user.id = patient.fk_user INNER JOIN medical_file on medical_file.fk_patient=patient.id'
-	console.log(user)
 	if (user.role == roles.doctor.id)
 		query += '  and medical_file.fk_doctor= ' + user.userId
+	if (user.role == roles.nurse.id)
+		query += ' INNER join nurses on nurses.fk_medical_file = medical_file.id and nurses.fk_user = ' + user.userId
 	query += ';'
 
 	app.connection.query(query, (err,result)=>{

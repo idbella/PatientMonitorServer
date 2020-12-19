@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:28:51 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/04 11:36:43 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/19 18:55:52 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,13 @@ module.exports = (app) => {
 		const doctor = roles.doctor.id
 		if ((role != recep && doctor != role && nurse != role))
 			return response.sendStatus(401);
-        listPatientMedicalFiles(app, req.params.id, (err, result)=>{
-            if (err)
-                return res.sendStatus(500)
-            res.send(result);
+        listPatientMedicalFiles(app, req.session, req.params.id, (err, result)=>{
+			if (err)
+			{
+				console.log(err)
+				return res.sendStatus(500)
+			}
+			res.send(result);
         })
     })
 }
