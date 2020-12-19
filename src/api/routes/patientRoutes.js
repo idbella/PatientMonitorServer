@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:45:34 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/13 17:48:10 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/18 11:24:48 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ module.exports = (app) => {
                         return console.log(err);
                     }
                     const data = request.body
-                    //const msg = format(userId, data.email, data.password)
-                    //sendMail('idbellasaid@gmail.com', 'Patient Monitoring | new Patient', msg,(err)=>{})
                     response.send(request.body.password);
                 }
             )

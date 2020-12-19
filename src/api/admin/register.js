@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/05 09:52:57 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/13 22:46:07 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/19 17:10:38 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ function getType(id)
 
 function getHtmlMessage(data){
     var html = `<h3>Hi ${data.first_name} ${data.last_name}</h3>
-    <p>this email is a validation email from XR Patient Monitoring App</p>
-    <p>You have been added as ${getType(data.role)} in Patient Monitoring here is your credentials</p>
+    <p>this is a validation email from XR Patient Monitoring App</p>
+    <p>You have been added as ${getType(data.role)} in Patient Monitoring here are your credentials</p>
     <p><b>user name : </b>${data.email}</p>
     <p><b>password : </b>${data.password}</p>
     <p>please change your password</p>`
