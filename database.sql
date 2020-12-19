@@ -118,6 +118,23 @@ CREATE TABLE `attachment_type` (
   `title` varchar(255)
 );
 
+CREATE TABLE `appointment` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `fk_medical_file` int
+);
+
+CREATE TABLE `nurses` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `fk_medical_file` int
+  `fk_user` int
+);
+
+ALTER TABLE `nurses` ADD FOREIGN KEY (`fk_medical_file`) REFERENCES `medical_file` (`id`) on delete cascade on update cascade;
+
+ALTER TABLE `nurses` ADD FOREIGN KEY (`fk_user`) REFERENCES `user` (`id`) on delete cascade on update cascade;
+
+ALTER TABLE `appointment` ADD FOREIGN KEY (`fk_medical_file`) REFERENCES `medical_file` (`id`) on delete cascade on update cascade;
+
 ALTER TABLE `attach` ADD FOREIGN KEY (`fk_attachment`) REFERENCES `attachment` (`id`) on delete cascade on update cascade;
 
 ALTER TABLE `medical_file` ADD FOREIGN KEY (`fk_insurance_type`) REFERENCES `insurance` (`id`) on delete cascade on update cascade;
