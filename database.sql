@@ -120,12 +120,13 @@ CREATE TABLE `attachment_type` (
 
 CREATE TABLE `appointment` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
+  'date' date,
   `fk_medical_file` int
 );
 
 CREATE TABLE `nurses` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `fk_medical_file` int
+  `fk_medical_file` int,
   `fk_user` int
 );
 
