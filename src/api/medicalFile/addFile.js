@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:31:55 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/13 14:41:53 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/19 18:05:44 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,9 @@ function addMedicalFile(app, patientId, data, callback)
     app.connection.query(query, newData, (err, res)=>{
         if (err)
             return callback(err)
-        if (res.affectedRows > 0){
-            setCurrentMedicalFile(app, patientId, res.insertId, callback)
-        }
-        else
-            callback("database error");
+        addnurses(app, res.insertId, data.nurses,()=>{})
+        setCurrentMedicalFile(app, patientId, res.insertId)
+        callback(err, res);
     })
 }
 

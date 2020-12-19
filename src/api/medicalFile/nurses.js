@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/13 11:09:03 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/13 11:36:31 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/19 18:10:30 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ function addnurses(app, medicalFileId, nurses, callback) {
         });
         query += values + ';';
         if (values != undefined)
-            app.connection.query(query, callback)
+            app.connection.query(query, (err, res)=>{
+                if (err)
+                    console.log(err)
+                callback(err, res)
+            })
     }
 }
 
