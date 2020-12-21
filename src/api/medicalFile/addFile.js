@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:31:55 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/19 18:05:44 by sid-bell         ###   ########.fr       */
+/*   Updated: 2020/12/20 00:14:44 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ function addMedicalFile(app, patientId, data, callback)
         fk_insurance_type:data.insurance_type,
         nurses:data.nurses
     }
-    console.log(newData)
+
     if (undefined === data.insurance_type)
         delete newData.insurance_type
     if (undefined === data.doctor)
@@ -34,9 +34,20 @@ function addMedicalFile(app, patientId, data, callback)
     app.connection.query(query, newData, (err, res)=>{
         if (err)
             return callback(err)
-        addnurses(app, res.insertId, data.nurses,()=>{})
-        setCurrentMedicalFile(app, patientId, res.insertId)
+        const fileId = res.insertId
+        addnurses(app, fileId, data.nurses,()=>{})
+        setCurrentMedicalFile(app, patientId, fileId)
+        addAppointment(app, fileId, data.appointment)
         callback(err, res);
+    })
+}
+
+function addAppointment(app, fileId, date)
+{
+    const query = 'INSERT INTO `appointment`(`date`,`fk_medical_file`) VALUES (?,?)'
+    app.connection.query(query, [date, fileId] ,(err)=>{
+        if (err)
+            console.log(err)
     })
 }
 
