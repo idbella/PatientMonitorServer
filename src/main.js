@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:30:52 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/03 11:12:00 by sid-bell         ###   ########.fr       */
+/*   Updated: 2021/02/04 15:43:21 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ require('./api/routes/patientRoutes')(app)
 require('./api/routes/medicalFileRoutes')(app)
 require('./api/routes/notesRoutes')(app)
 require('./api/routes/attachmentRoutes')(app)
+require('./api/routes/allergyRoutes')(app)
+require('./api/routes/factorRoutes')(app)
 
 const sendMail = require('./api/sendMail')
 
