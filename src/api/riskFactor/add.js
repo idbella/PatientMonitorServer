@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   addNote.js                                         :+:      :+:    :+:   */
+/*   add.js                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/12 14:58:40 by sid-bell          #+#    #+#             */
-/*   Updated: 2021/02/05 10:30:09 by sid-bell         ###   ########.fr       */
+/*   Created: 2021/02/04 15:31:38 by sid-bell          #+#    #+#             */
+/*   Updated: 2021/02/04 15:48:25 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-module.exports = (app, userId, fileId, data, callback) => {
+module.exports = (app, patientId, data, callback) => {
 
-    const query = 'insert into note set ?;'
+    const query = `update patient set ? where patient.id = ?;`
     const newData = {
-            notes           :data.notes,
-            fk_medical_file :fileId,
-            fk_user         :userId,
-            permissions     :data.permissions,
-            fk_patient      :null,
-            type            :0       
+            dia     :data.dia,
+            hta     :data.hta,
+            obe     :data.obe,
+            tab     :data.tab
         }
-    //console.log(newData)
-    app.connection.query(query, newData, callback)
+    console.log('update factor ' , newData)
+    const qy = app.connection.query(query, [newData, patientId], callback)
+    console.log(qy)
 }

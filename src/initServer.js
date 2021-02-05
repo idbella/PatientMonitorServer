@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/04 18:29:02 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/03 10:28:59 by sid-bell         ###   ########.fr       */
+/*   Updated: 2021/01/30 16:58:05 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ const jwt           = require('jsonwebtoken')
 const connection    = mysql.createPool(process.env.CLEARDB_DATABASE_URL);
 
 const app = express();
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Headers', '*');
@@ -33,6 +34,7 @@ app.use(function(req, res, next) {
       next();
   }
 });
+
 app.use(cors({
     origin: function(origin, callback){
       return callback(null, true);

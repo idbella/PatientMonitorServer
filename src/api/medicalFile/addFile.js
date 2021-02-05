@@ -6,11 +6,12 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 16:31:55 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/20 00:14:44 by sid-bell         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:32:46 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 const addnurses = require('../medicalFile/nurses')
+const types     = require('../const/fileType')
 
 function addMedicalFile(app, patientId, data, callback)
 {
@@ -21,9 +22,12 @@ function addMedicalFile(app, patientId, data, callback)
         insurance:data.insurance,
         fk_doctor:data.doctor,
         fk_insurance_type:data.insurance_type,
-        nurses:data.nurses
+        nurses:data.nurses,
+        type:data.type
     }
-
+    console.log(data.type)
+    if (data.type == undefined)
+        newData.type = types.medical;
     if (undefined === data.insurance_type)
         delete newData.insurance_type
     if (undefined === data.doctor)
@@ -31,7 +35,7 @@ function addMedicalFile(app, patientId, data, callback)
 
     const query = 'insert into medical_file set ?;'
 
-    app.connection.query(query, newData, (err, res)=>{
+    const p = app.connection.query(query, newData, (err, res)=>{
         if (err)
             return callback(err)
         const fileId = res.insertId
@@ -40,6 +44,7 @@ function addMedicalFile(app, patientId, data, callback)
         addAppointment(app, fileId, data.appointment)
         callback(err, res);
     })
+    console.log(p)
 }
 
 function addAppointment(app, fileId, date)

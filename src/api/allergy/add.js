@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   addNote.js                                         :+:      :+:    :+:   */
+/*   add.js                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/12 14:58:40 by sid-bell          #+#    #+#             */
-/*   Updated: 2021/02/05 10:30:09 by sid-bell         ###   ########.fr       */
+/*   Created: 2021/02/04 12:13:07 by sid-bell          #+#    #+#             */
+/*   Updated: 2021/02/04 15:08:22 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-module.exports = (app, userId, fileId, data, callback) => {
+module.exports = (app, patientId, data, callback) => {
 
-    const query = 'insert into note set ?;'
+    const query = 'insert into allergy set ?;'
     const newData = {
-            notes           :data.notes,
-            fk_medical_file :fileId,
-            fk_user         :userId,
-            permissions     :data.permissions,
-            fk_patient      :null,
-            type            :0       
+            title           :data.title,
+            fk_patient      :patientId,
+            description     :data.desc,
         }
-    //console.log(newData)
+    console.log('insert ' , newData)
     app.connection.query(query, newData, callback)
 }

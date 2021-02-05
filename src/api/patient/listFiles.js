@@ -6,7 +6,7 @@
 /*   By: sid-bell <sid-bell@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/11 10:35:17 by sid-bell          #+#    #+#             */
-/*   Updated: 2020/12/19 20:55:20 by sid-bell         ###   ########.fr       */
+/*   Updated: 2021/02/04 17:07:03 by sid-bell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@ const roles = require('../const/roles')
 
 function listPatientMedicalFiles(app, user, patientId, callback)
 {
-    var query = 'select medical_file.id, title, nurses, motif, summary, insurance, fk_insurance_type as insurance_type,\
+    var query = 'select medical_file.id, type, title, nurses, motif, summary, insurance, fk_insurance_type as insurance_type,\
         fk_doctor as doctor,creation_date from medical_file  '
     if (user.role == roles.doctor.id)
         query += ' where fk_patient=? and fk_doctor=?;'
