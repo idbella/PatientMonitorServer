@@ -32,7 +32,11 @@ CREATE TABLE `patient` (
   `postalcode` varchar(255),
   `city` varchar(255),
   `country` varchar(255),
-  `fk_user` int
+  `fk_user` int,
+  `dia` text,
+  `hta` text,
+  `obe` text,
+  `tab` text
 );
 
 CREATE TABLE `medical_file` (
@@ -42,9 +46,11 @@ CREATE TABLE `medical_file` (
   `creation_date` timestamp,
   `insurance` text,
   `summary` text,
+  `nurses` text,
   `fk_patient` int,
   `fk_doctor` int,
-  `fk_insurance_type` int
+  `fk_insurance_type` int,
+  `type` int
 );
 
 CREATE TABLE `minor` (
@@ -60,7 +66,9 @@ CREATE TABLE `note` (
   `notes` text,
   `permissions` int,
   `fk_medical_file` int,
-  `fk_user` int
+  `fk_user` int,
+  `fk_patient` int,
+  `type` int
 );
 
 CREATE TABLE `attachment` (
@@ -82,37 +90,6 @@ CREATE TABLE `attach` (
   `fk_attachment` int
 );
 
-CREATE TABLE `questionnaire` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `fk_patient` int
-);
-
-CREATE TABLE `question` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `question` text,
-  `type` int,
-  `fk_questionnaire` int
-);
-
-CREATE TABLE `answer` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `answer` text,
-  `answer_number` int,
-  `fk_question` int
-);
-
-CREATE TABLE `predefined_questionnaire` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `title` varchar(255),
-  `fk_questionnaire` int
-);
-
-CREATE TABLE `answer_choice` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
-  `choice` varchar(255),
-  `fk_question` int
-);
-
 CREATE TABLE `attachment_type` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(255)
@@ -120,7 +97,7 @@ CREATE TABLE `attachment_type` (
 
 CREATE TABLE `appointment` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  'date' date,
+  `date` timestamp,
   `fk_medical_file` int
 );
 
@@ -129,6 +106,15 @@ CREATE TABLE `nurses` (
   `fk_medical_file` int,
   `fk_user` int
 );
+
+CREATE TABLE `allergy` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `fk_patient` int,
+  `title` varchar(255),
+  `description` text
+);
+
+ALTER TABLE `allergy` ADD FOREIGN KEY (`fk_patient`) REFERENCES `patient` (`id`) on delete cascade on update cascade;
 
 ALTER TABLE `nurses` ADD FOREIGN KEY (`fk_medical_file`) REFERENCES `medical_file` (`id`) on delete cascade on update cascade;
 
@@ -139,16 +125,6 @@ ALTER TABLE `appointment` ADD FOREIGN KEY (`fk_medical_file`) REFERENCES `medica
 ALTER TABLE `attach` ADD FOREIGN KEY (`fk_attachment`) REFERENCES `attachment` (`id`) on delete cascade on update cascade;
 
 ALTER TABLE `medical_file` ADD FOREIGN KEY (`fk_insurance_type`) REFERENCES `insurance` (`id`) on delete cascade on update cascade;
-
-ALTER TABLE `answer_choice` ADD FOREIGN KEY (`fk_question`) REFERENCES `question` (`id`) on delete cascade on update cascade;
-
-ALTER TABLE `predefined_questionnaire` ADD FOREIGN KEY (`fk_questionnaire`) REFERENCES `questionnaire` (`id`) on delete cascade on update cascade;
-
-ALTER TABLE `answer` ADD FOREIGN KEY (`fk_question`) REFERENCES `question` (`id`) on delete cascade on update cascade;
-
-ALTER TABLE `question` ADD FOREIGN KEY (`fk_questionnaire`) REFERENCES `questionnaire` (`id`) on delete cascade on update cascade;
-
-ALTER TABLE `questionnaire` ADD FOREIGN KEY (`fk_patient`) REFERENCES `patient` (`id`) on delete cascade on update cascade;
 
 ALTER TABLE `attachment` ADD FOREIGN KEY (`fk_medical_file`) REFERENCES `medical_file` (`id`) on delete cascade on update cascade;
 
@@ -171,6 +147,8 @@ ALTER TABLE `patient` ADD FOREIGN KEY (`fk_current_mFile`) REFERENCES `medical_f
 ALTER TABLE `medical_file` ADD FOREIGN KEY (`fk_patient`) REFERENCES `patient` (`id`) on delete cascade on update cascade;
 
 ALTER TABLE `minor` ADD FOREIGN KEY (`fk_patient`) REFERENCES `patient` (`id`) on delete cascade on update cascade;
+
+ALTER TABLE `note` ADD FOREIGN KEY (`fk_patient`) REFERENCES `patient` (`id`) on delete cascade on update cascade;
 
 
 
@@ -196,10 +174,10 @@ INSERT INTO `role` (`id`, `title`, `permissions`) VALUES
 
 INSERT INTO `user`
 (`id`, `title`, `email`, `password`, 														`first_name`, 	`last_name`, `phone`, `fk_role`)VALUES
-(1, 'admin', 'admin', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa', 		'said', 		'blalla', NULL, 1),
-(2, 'doc title', 'doctor', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa',		'tabib', 		'admin', NULL, 2),
-(3, 'nurse title', 'nurse', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa', 		'momarida', 	'admin', NULL, 3),
-(5, 'recep', 'recep', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa', 'mosta9bil',	'admin', NULL, 5);
+(1, 'admin', 'admin', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa', 		'othman', 		'herba', NULL, 1),
+(2, 'doc title', 'doctor', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa',		'said', 		'idbella', NULL, 2),
+(3, 'nurse title', 'nurse', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa', 		'ayoube', 	'khourbach', NULL, 3),
+(5, 'recep', 'recep', '$2b$10$yjnvBanGhl8oxpGfxGUlH.VOXszpQChMmoa8N/keihbr9Sd2OAtFa', 'youssef',	'yassine', NULL, 5);
 
 INSERT INTO `attachment_type` (`id`, `title`) VALUES (NULL, 'image'), (NULL, 'document'); 
   
